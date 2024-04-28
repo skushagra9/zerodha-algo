@@ -1,4 +1,4 @@
-import { app, STOCK } from "../index.ts"
+import { app } from ".."
 import request from "supertest";
 
 describe("Can create a bid", () => {
