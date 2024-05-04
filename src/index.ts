@@ -71,6 +71,39 @@ app.get('/balance/:userId', (req, res) => {
   return { usd: 123, stockShares: 22 }
 })
 
+function calculateAveragePrice(items: Order[], quantity: number) {
+  let remainingQuantity = quantity;
+  const resultItems = [];
+
+  for (const item of items) {
+    if (item.quantity >= remainingQuantity) {
+      resultItems.push({ price: item.price, quantity: remainingQuantity });
+      remainingQuantity = 0;
+      break;
+    } else {
+      resultItems.push(item);
+      remainingQuantity -= item.quantity;
+    }
+  }
+
+  const totalPrice = resultItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const averagePrice = totalPrice / quantity;
+
+  return { price: averagePrice, quantity: quantity, items: resultItems };
+}
+
+app.get("/quote", (req, res) => {
+  const { side, quantity, userId } = req.body;
+
+  if (side == "bid") {
+    const result = calculateAveragePrice(asks, quantity);
+    res.json(result);
+  } else {
+    const result = calculateAveragePrice(bids, quantity);
+    res.json(result);
+  }
+});
+
 app.get('/depth', (req, res) => {
   const depth: {
     [price: string]: {
