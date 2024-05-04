@@ -1,8 +1,4 @@
----
-title: Zerodha Trading Algorithm
----
-
-# Stock Exchange App Documentation
+# Zerodha Trading Algorithm
 
 This documentation covers the implementation details and API endpoints of the Stock Exchange application built with Express and TypeScript.
 Please note, here we assume only one market
