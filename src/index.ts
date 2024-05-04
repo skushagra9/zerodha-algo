@@ -92,7 +92,7 @@ function calculateAveragePrice(items: Order[], quantity: number) {
   return { price: averagePrice, quantity: quantity, items: resultItems };
 }
 
-app.get("/quote", (req, res) => {
+app.post("/quote", (req, res) => {
   const { side, quantity, userId } = req.body;
 
   if (side == "bid") {
